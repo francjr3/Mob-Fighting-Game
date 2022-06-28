@@ -13,12 +13,43 @@ image.src = "./img/PSGmap.png"
 const playerImg = new Image()
 playerImg.src = "./img/playerDown.png"
 
-console.log(image)
+class Sprite {
+    constructor({position, velocity, image}) {
+        this.position = position
+        this.image = image
+    }
 
+    draw() {
+        context.drawImage(this.image, this.position.x, this.position.y)
+    }
+}
+
+const background = new Sprite ({
+    position: {
+    x: -593,
+    y: -800
+    },
+    image: image
+})
+
+const keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
 
 function animate() {
     window.requestAnimationFrame(animate)
-    context.drawImage(image, -593, -800)
+    background.draw()
     context.drawImage(
         playerImg,
         0,
@@ -30,23 +61,45 @@ function animate() {
         playerImg.width/4,
         playerImg.height
     )
+    if (keys.w.pressed) background.position.y += 3
+    else if (keys.a.pressed) background.position.x += 3
+    else if (keys.s.pressed) background.position.y -= 3
+    else if (keys.d.pressed) background.position.x -= 3
 }
 animate()
+
+window.addEventListener("keyup", (e) => {
+    switch (e.key) {
+        case 'w':
+            keys.w.pressed = false
+            break
+        case 'a':
+            keys.a.pressed = false
+            break
+        case 's':
+            keys.s.pressed = false
+            break
+        case 'd':
+            keys.d.pressed = false
+            break
+    }
+    console.log(keys)
+})
 
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
         case 'w':
-            console.log(e.key)
+            keys.w.pressed = true
             break
         case 'a':
-            console.log(e.key)
+            keys.a.pressed = true
             break
         case 's':
-            console.log(e.key)
+            keys.s.pressed = true
             break
         case 'd':
-            console.log(e.key)
+            keys.d.pressed = true
             break
-
     }
+    console.log(keys)
 })
