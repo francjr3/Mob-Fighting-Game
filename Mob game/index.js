@@ -139,7 +139,7 @@ function animate() {
                     }}
                 })
             ) {
-                console.log("colliding")
+                // console.log("colliding")
                 moving = false
                 break
             }
@@ -160,7 +160,7 @@ function animate() {
                     }}
                 })
             ) {
-                console.log("colliding")
+                // console.log("colliding")
                 moving = false
                 break
             }
@@ -181,7 +181,7 @@ function animate() {
                     }}
                 })
             ) {
-                console.log("colliding")
+                // console.log("colliding")
                 moving = false
                 break
             }
@@ -202,7 +202,7 @@ function animate() {
                     }}
                 })
             ) {
-                console.log("colliding")
+                // console.log("colliding")
                 moving = false
                 break
             }
