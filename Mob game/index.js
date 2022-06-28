@@ -344,7 +344,8 @@ draggle = new Sprite({
         max: 4,
         hold: 30
     },
-    animate: true
+    animate: true,
+    isEnemy: true
 })
 
 
@@ -370,6 +371,21 @@ function animateBattle() {
     draggle.draw()
     emby.draw()
 }
+
+document.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+        emby.attack({
+            attack: {
+                name: "Tackle",
+                damage: 10,
+                type: "Normal"
+            },
+            recipient: draggle
+        })
+        //console.log("button click")
+    })
+})
+
 
 let lastKey = ''
 window.addEventListener("keyup", (e) => {
