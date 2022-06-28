@@ -91,7 +91,8 @@ const player = new Sprite ({
     },
     image: playerDownImg,
     frames: {
-        max: 4
+        max: 4,
+        hold: 10
     },
     sprites: {
         left: playerLeftImg,
@@ -174,7 +175,7 @@ function animate() {
     foreground2.draw()
 
     let moving = true
-    player.moving = false
+    player.animate = false
     if (battle.initiated) return
     // initiate battle
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
@@ -222,7 +223,7 @@ function animate() {
     }
 
     if (keys.w.pressed && lastKey === 'w') {
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.up
 
         for (let i = 0; i < boundaries.length; i++) {
@@ -246,7 +247,7 @@ function animate() {
                 movable.position.y += 3
         })
     } else if (keys.a.pressed && lastKey === 'a') {
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.left
 
         for (let i = 0; i < boundaries.length; i++) {
@@ -270,7 +271,7 @@ function animate() {
                 movable.position.x += 3
         })
     } else if (keys.s.pressed && lastKey === 's') {
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.down
 
         for (let i = 0; i < boundaries.length; i++) {
@@ -294,7 +295,7 @@ function animate() {
                 movable.position.y -= 3
         })
     } else if (keys.d.pressed && lastKey === 'd') {
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.right
         
         for (let i = 0; i < boundaries.length; i++) {
@@ -331,9 +332,43 @@ battleBackground = new Sprite({
     image: battleBackgroundImg
 })
 
+const draggleImg = new Image()
+draggleImg.src = "./img/draggleSprite.png"
+draggle = new Sprite({
+    position: {
+        x: 800,
+        y: 100
+    },
+    image: draggleImg,
+    frames: {
+        max: 4,
+        hold: 30
+    },
+    animate: true
+})
+
+
+const embyImg = new Image()
+embyImg.src = "./img/embySprite.png"
+emby = new Sprite({
+    position: {
+        x: 280,
+        y: 325
+    },
+    image: embyImg,
+    frames: {
+        max: 4,
+        hold: 30
+    },
+    animate: true
+})
+
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
+    draggle.draw()
+    emby.draw()
 }
 
 let lastKey = ''
