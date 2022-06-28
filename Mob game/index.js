@@ -1,6 +1,7 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d")
 
+
 canvas.width = 1024
 canvas.height = 576
 
@@ -155,8 +156,12 @@ function rectCollision({rect1, rect2}) {
     )
 }
 
+const battle = {
+    initiated: false
+}
+
 function animate() {
-    window.requestAnimationFrame(animate)
+    const animationId = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
@@ -168,6 +173,10 @@ function animate() {
     foreground.draw()
     foreground2.draw()
 
+    let moving = true
+    player.moving = false
+    if (battle.initiated) return
+    // initiate battle
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battleZones.length; i++) {
             const zone = battleZones[i]
@@ -184,13 +193,34 @@ function animate() {
                 Math.random() < 0.01
             ) {
                 console.log("BATTLE")
+                // stop current animation loop
+                window.cancelAnimationFrame(animationId)
+                battle.initiated = true
+                gsap.to("#overlappingDiv", {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete() {
+                        gsap.to("#overlappingDiv", {
+                            opacity: 1,
+                            duration: 0.4,
+                            onComplete() {
+                                // start new animation loop for fight scene
+                                animateBattle()
+                                gsap.to("#overlappingDiv", {
+                                    opacity: 0,
+                                    duration: 0.4
+                                })
+                            }
+                        })
+                    }
+                })
                 break
             }
         }
     }
 
-    let moving = true
-    player.moving = false
     if (keys.w.pressed && lastKey === 'w') {
         player.moving = true
         player.image = player.sprites.up
@@ -289,12 +319,24 @@ function animate() {
         })
     }
 }
-
-
 animate()
+
+const battleBackgroundImg = new Image()
+battleBackgroundImg.src = "./img/battleBackground.png"
+battleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    image: battleBackgroundImg
+})
+
+function animateBattle() {
+    window.requestAnimationFrame(animateBattle)
+    battleBackground.draw()
+}
+
 let lastKey = ''
-
-
 window.addEventListener("keyup", (e) => {
     switch (e.key) {
         case 'w':
