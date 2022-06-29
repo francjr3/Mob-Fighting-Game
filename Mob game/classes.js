@@ -1,7 +1,15 @@
 
 
 class Sprite {
-    constructor({position, velocity, image, frames = {max: 1, hold: 10}, sprites, animate = false, isEnemy = false, rotation = 0}) {
+    constructor({
+        position,
+        velocity,
+        image,
+        frames = {max: 1, hold: 10},
+        sprites,
+        animate = false,
+        rotation = 0
+    }) {
         this.position = position
         this.image = image
         this.frames = {...frames, val: 0, elapsed: 0}
@@ -12,8 +20,6 @@ class Sprite {
         this.animate = animate
         this.sprites = sprites
         this.opacity = 1
-        this.health = 100
-        this.isEnemy = isEnemy
         this.rotation = rotation
     }
 
@@ -50,7 +56,39 @@ class Sprite {
             else this.frames.val = 0 
         }
     }
+}
+
+class Monster extends Sprite {
+    constructor({
+        position,
+        velocity,
+        image,
+        frames = {max: 1, hold: 10},
+        sprites,
+        animate = false,
+        rotation = 0,
+        isEnemy = false,
+        name,
+        attacks
+    }) {
+        super({
+            position,
+            velocity,
+            image,
+            frames,
+            sprites,
+            animate,
+            rotation,
+        })
+        this.health = 100
+        this.isEnemy = isEnemy
+        this.name = name
+        this.attacks = attacks
+    }
     attack({attack, recipient, rederedSprites}) {
+        document.querySelector("#dialogueBox").style.display = "block"
+        document.querySelector("#dialogueBox").innerHTML = this.name + " used " + attack.name
+
         let healthBar = "#enemyHealthBar"
         if (this.isEnemy) healthBar = "#playerHealthBar"
         let rotation = 1.5
@@ -138,7 +176,6 @@ class Sprite {
         }
     }
 }
-
 
 class Boundary {
     static width = 48
