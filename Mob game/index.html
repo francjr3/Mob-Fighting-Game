@@ -27,8 +27,10 @@
 <div style="display: inline-block; position: relative;">
     <div
         id="overlappingDiv"
-        style="background-color: black; position: absolute; top: 0; right : 0; bottom : 0; left: 0; opacity: 0; pointer-events: none;">
+        style="background-color: black; position: absolute; top: 0; right : 0; bottom : 0; left: 0; opacity: 0; pointer-events: none; z-index: 10;">
     </div>
+    <canvas></canvas>
+    <div id="ui">
     <!-- Health Bar: enemy side-->
     <div 
         style="
@@ -65,7 +67,7 @@
             <div id="playerHealthBar" style="height: 5px; background-color: green; position: absolute; top: 0; left: 0; right: 0;"></div>
         </div>
     </div>
-    <canvas></canvas>
+
     <div 
         style="
             background-color: white;
@@ -94,6 +96,7 @@
         >
             <h1 id="attackType" style="font-size: 16px;">Attack Type</h1>
         </div>
+    </div>
     </div>
 </div>
 <script 

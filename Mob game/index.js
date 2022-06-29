@@ -208,6 +208,7 @@ function animate() {
                             duration: 0.4,
                             onComplete() {
                                 // start new animation loop for fight scene
+                                initBattle()
                                 animateBattle()
                                 gsap.to("#overlappingDiv", {
                                     opacity: 0,
