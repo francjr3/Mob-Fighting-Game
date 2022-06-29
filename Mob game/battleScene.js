@@ -39,6 +39,13 @@ document.querySelectorAll("button").forEach((button) => {
             recipient: draggle
         })
         //console.log("button click")
+        
+        if (draggle.health <= 0) {
+            queue.push(() => {
+                draggle.faint()
+            })
+        }
+        // Attacks
         const randomAttack = draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
         queue.push(() => {
             draggle.attack({
@@ -46,7 +53,18 @@ document.querySelectorAll("button").forEach((button) => {
                 recipient: emby,
                 renderedSprites
             })
+            if (emby.health <= 0) {
+                queue.push(() => {
+                    emby.faint()
+                })
+            }
         })
+    })
+
+    button.addEventListener("mouseenter", (e) => {
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        document.querySelector("#attackType").innerHTML = selectedAttack.type
+        document.querySelector("#attackType").style.color = selectedAttack.color
     })
 })
 
